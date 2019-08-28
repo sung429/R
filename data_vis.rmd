@@ -1,0 +1,57 @@
+---
+title: "DataVis"
+output: html_document
+---
+
+# install.packages("ggiraphExtra")
+# install.packages('tibble')
+# install.packages("maps")
+install.packages("mapproj")
+```{r}
+library(ggiraphExtra)
+library(ggplot2)
+search()
+```
+## 데이터 셋
+* USArrests 데이터 셋
+```{r}
+str(USArrests)
+dim(USArrests)
+colnames(USArrests)
+ggplot(USArrests, aes(Murder,Assault)) + geom_point()
+
+```
+
+```{r}
+library(tibble)
+crime <- rownames_to_column(USArrests, var="state")
+crime$state <- tolower(crime$state)
+crime
+```
+```{r}
+library(ggplot2)
+library(maps)
+states_map <- map_data("state")
+str(states_map)
+head(states_map)
+```
+```{r}
+library(ggiraphExtra)
+library(mapproj)
+ggChoropleth(data = crime, aes(fill = Murder, map_id=state),map=states_map)
+```
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
